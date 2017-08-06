@@ -1,0 +1,18 @@
+{
+    "lastUpdated": 1502022734447,
+    "parcels": [
+        {
+            "parcelName": "CONDAR-3.4.1-el7.parcel",
+            "hash": "4fd87e423931483a1b29f33f3193386d9b016373",
+            "depends": "",
+            "replaces": "",
+            "conflicts": "",
+            "components": [
+                {
+                    "name": "conda-R",
+                    "version": "3.4.1+cdh5.0.0~el7-cdh5.0.0"
+                }
+            ]
+        }
+    ]
+}
