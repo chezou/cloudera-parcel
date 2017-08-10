@@ -38,11 +38,25 @@ I borrowed validator.jar and make_manifest.py from [cm_ext repo](https://github.
 See also: [How to use validator.jar](https://github.com/cloudera/cm_ext/wiki/Building-a-parcel#validation)
 
 ```
-$ java -jar lib/validator.jar <args>`
+$ java -jar lib/validator.jar <args>
+```
+
+At least, you should pass parcel test:
+
+```
+$ java -jar lib/validator.jar -f target/CONDAR-3.4.1-el7.parcel
 ```
 
 ### How to create manifest.json
 
+Run following command, then you'll get `./target/manifest.json`.
+
 ```
 $ python ./lib/make_manifest.py ./target
 ```
+
+## Put the Parcels into your http server
+
+Upload every `./target/*.parcel` and `./target/manifest.json` to the same directory on http server.
+
+You can put Parcels on S3. It doesn't need to have index.html for directory listing.
