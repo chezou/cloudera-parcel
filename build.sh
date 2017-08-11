@@ -5,6 +5,8 @@ VERSION=3.4.1.p0.1
 
 ./extract_from_docker.sh $VERSION centos7 el7
 ./extract_from_docker.sh $VERSION centos6 el6
+./extract_from_docker.sh $VERSION xenial xenial
+./extract_from_docker.sh $VERSION jessie jessie
 
 # Create manifest.json
 echo "Create manifest.json"
