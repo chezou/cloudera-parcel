@@ -15,7 +15,7 @@ $ docker build -t chezou/condar:centos7 -f centos7.Dockerfile .
 # Open another terminal and find your container.
 $ docker run -it -t chezou/condar:centos7 /bin/bash
 $ docker ps
-$ docker cp <containerId>:/opt/conda/envs/R_env ./target/CONDAR-3.4.1/lib/conda-R
+$ docker cp -L <containerId>:/opt/conda/envs/R_env ./target/CONDAR-3.4.1/lib/conda-R
 # Terminate docker process
 ```
 
