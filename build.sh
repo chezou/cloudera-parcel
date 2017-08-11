@@ -22,6 +22,8 @@ popd
 echo "Validation"
 java -jar lib/validator.jar -f target/CONDAR-${VERSION}-${OS_VERSION}.parcel
 
+rm -rf ./target/CONDAR-${VERSION}
+
 # Create manifest.json
 echo "Create manifest.json"
 python ./lib/make_manifest.py ./target
