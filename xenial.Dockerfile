@@ -12,7 +12,7 @@ RUN apt-get -qq update && \
     rm Miniconda2-latest-Linux-x86_64.sh && \
     export PATH=/opt/conda/bin:$PATH && \
     conda create -y -q --copy -n R_env r-essentials && \
-    sed -i s,/opt/conda/envs/R_env,/opt/cloudera/parcels/CONDAR/lib/conda-R/lib/R, /opt/conda/envs/R_env/bin/R
+    sed -i s,/opt/conda/envs/R_env,/opt/cloudera/parcels/CONDAR/lib/conda-R, /opt/conda/envs/R_env/bin/R
 
 RUN mkdir -p /data/CONDAR-$VERSION/lib && \
     mkdir -p /data/CONDAR-$VERSION/meta
