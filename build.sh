@@ -3,6 +3,9 @@ set -e
 
 VERSION=3.4.1.p0.1
 
+echo "Create target directory"
+mkdir -p ./target
+
 ./extract_from_docker.sh $VERSION centos7 el7
 ./extract_from_docker.sh $VERSION centos6 el6
 ./extract_from_docker.sh $VERSION xenial xenial
