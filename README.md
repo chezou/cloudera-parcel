@@ -60,3 +60,9 @@ $ python ./lib/make_manifest.py ./target
 Upload every `./target/*.parcel` and `./target/manifest.json` to the same directory on http server.
 
 You can put Parcels on S3. It doesn't need to have index.html for directory listing.
+
+## FAQ
+
+### How to control R version?
+
+This parcel use Miniconda to install R. You can controll R version with setting [r-essentials](https://anaconda.org/r/r-essentials)' version.
