@@ -1,7 +1,8 @@
-FROM debian:8
+ARG TARGET_OS=trusty
+FROM ubuntu:${TARGET_OS}
 
 ARG VERSION=3.4.1.p0.1
-ARG OS_VERSION=jessie
+ARG OS_VERSION=trusty
 
 RUN apt-get -qq update && \
     apt-get install -qq -y \
