@@ -2,6 +2,16 @@
 
 This repository is aim to create R parcel.
 
+## Simple way to build Parcels
+
+After installation of Docker, run:
+
+```
+$ ./build.sh
+```
+
+You will find parcels in `./target` directory.
+
 ## Preparation
 
 Prepare R environment using miniconda.
