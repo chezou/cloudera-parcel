@@ -4,8 +4,7 @@ FROM centos:${TARGET_OS}
 ARG VERSION=3.4.1.p0.1
 ARG OS_VERSION=el7
 
-RUN yum install -y yum-plugin-ovl && \
-    yum install -y bzip2 && \
+RUN yum install -y bzip2 && \
     curl -O https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
     sh Miniconda2-latest-Linux-x86_64.sh -b -p /opt/conda && \
     rm -f Miniconda2-latest-Linux-x86_64.sh && \
