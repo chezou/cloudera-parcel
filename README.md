@@ -2,6 +2,10 @@
 
 This repository is aim to create R parcel.
 
+## Prerequisity
+
+You need to install Docker. I confirmed with Docker community edition on Ubuntu.
+
 ## Simple way to build Parcels
 
 After installation of Docker, run:
@@ -12,7 +16,9 @@ $ ./build.sh
 
 You will find parcels in `./target` directory.
 
-## Preparation
+## Manual build
+
+### Preparation
 
 Prepare R environment using miniconda.
 
@@ -29,22 +35,22 @@ $ docker cp -L <containerId>:/opt/conda/envs/R_env ./target/CONDAR-3.4.1/lib/con
 # Terminate docker process
 ```
 
-## Modify meta data
+### Modify meta data
 
 In current version, you should modify version info in json.
 
-## Tar your Parcel
+### Tar your Parcel
 
 ```
 $ cd target
 $ tar cvzf  CONDAR-3.4.1-el7.parcel CONDAR-3.4.1 --owner=root --group=root
 ```
 
-## validate, create metadata.json
+### validate, create metadata.json
 
 I borrowed validator.jar and make_manifest.py from [cm_ext repo](https://github.com/cloudera/cm_ext).
 
-### How to validate json and parcel
+#### How to validate json and parcel
 See also: [How to use validator.jar](https://github.com/cloudera/cm_ext/wiki/Building-a-parcel#validation)
 
 ```
@@ -57,7 +63,7 @@ At least, you should pass parcel test:
 $ java -jar lib/validator.jar -f target/CONDAR-3.4.1-el7.parcel
 ```
 
-### How to create manifest.json
+#### How to create manifest.json
 
 Run following command, then you'll get `./target/manifest.json`.
 
@@ -65,7 +71,7 @@ Run following command, then you'll get `./target/manifest.json`.
 $ python ./lib/make_manifest.py ./target
 ```
 
-## Put the Parcels into your http server
+### Put the Parcels into your http server
 
 Upload every `./target/*.parcel` and `./target/manifest.json` to the same directory on http server.
 
