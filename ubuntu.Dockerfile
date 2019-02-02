@@ -6,7 +6,11 @@ ARG ARROW_VERSION=0.12.0
 ARG VERSION=3.4.1.p0.1
 ARG OS_VERSION=trusty
 
+# To avoid syntax error on `conda activate`, use bash
 SHELL ["/bin/bash", "-c"]
+
+# r-base includes tzdata. Get around interactive stop in that package
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update && \
     apt-get install -qq -y \
@@ -14,7 +18,8 @@ RUN apt-get -qq update && \
     curl && \
     curl -O https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
     bash Miniconda2-latest-Linux-x86_64.sh -b -p /opt/conda && \
-    rm -f Miniconda2-latest-Linux-x86_64.sh
+    rm -f Miniconda2-latest-Linux-x86_64.sh && \
+    apt-get clean
 
 ENV PATH /opt/conda/bin:$PATH
 RUN conda create -y -q --copy -c conda-forge -n R_env \
@@ -23,8 +28,6 @@ RUN conda create -y -q --copy -c conda-forge -n R_env \
         r-r.utils==2.7.0 \
         r-git2r==0.24.0
 
-# r-base includes tzdata. Get around interactive stop in that package
-ENV DEBIAN_FRONTEND=noninteractive
 # To provide tar place for utils::untar https://github.com/r-lib/devtools/issues/379#issuecomment-309836261
 ENV TAR "/bin/tar"
 RUN . /opt/conda/etc/profile.d/conda.sh && \
@@ -32,7 +35,7 @@ RUN . /opt/conda/etc/profile.d/conda.sh && \
     # Install R dependencies
     Rscript -e "install.packages('devtools', repos = 'http://cran.rstudio.com')" && \
     Rscript -e "devtools::install_github('apache/arrow', subdir = 'r', ref = 'apache-arrow-${ARROW_VERSION}')" && \
-    conda clean --all -y && \
+    conda clean -i -t -l -s -y && \
     conda deactivate && \
     sed -i s,/opt/conda/envs/R_env,/opt/cloudera/parcels/CONDAR/lib/conda-R, /opt/conda/envs/R_env/bin/R
 

@@ -9,7 +9,8 @@ ARG OS_VERSION=el7
 RUN yum install -y bzip2 && \
     curl -O https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
     sh Miniconda2-latest-Linux-x86_64.sh -b -p /opt/conda && \
-    rm -f Miniconda2-latest-Linux-x86_64.sh
+    rm -f Miniconda2-latest-Linux-x86_64.sh && \
+    yum clean all
 
 ENV PATH /opt/conda/bin:$PATH
 RUN /opt/conda/bin/conda create -y -q --copy -c conda-forge -n R_env \
@@ -22,7 +23,7 @@ RUN . /opt/conda/etc/profile.d/conda.sh && \
     # Install R dependencies
     Rscript -e "install.packages('devtools', repos = 'http://cran.rstudio.com')" && \
     Rscript -e "devtools::install_github('apache/arrow', subdir = 'r', ref = 'apache-arrow-${ARROW_VERSION}')" && \
-    conda clean --all -y && \
+    conda clean -i -t -l -s -y && \
     conda deactivate && \
     sed -i s,/opt/conda/envs/R_env,/opt/cloudera/parcels/CONDAR/lib/conda-R, /opt/conda/envs/R_env/bin/R
 
