@@ -6,8 +6,8 @@ VERSION=${1:-3.4.1.p0.1}
 DISTRIBUTION=${2:-centos}
 TARGET_OS=${3:-centos7}
 OS_VERSION=${4:-el7}
-R_VERSION="3.5.1"
-ARROW_VERSION="0.12.0"
+R_VERSION=${5:-3.5.1}
+ARROW_VERSION=${6:-0.12.0}
 TIME=$(date +%s)
 CONTAINER=parcel-build-$TIME
 

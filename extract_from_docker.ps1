@@ -1,9 +1,12 @@
-$VERSION=$Args[0]
-$DISTRIBUTION=$Args[1]
-$TARGET_OS=$Args[2]
-$OS_VERSION=$Args[3]
-$R_VERSION="3.5.1"
-$ARROW_VERSION="0.12.0"
+Param(
+    [String]$VERSION = "3.4.1.p0.1",
+    [String]$DISTRIBUTION = "centos",
+    [String]$TARGET_OS = "centos7",
+    [String]$OS_VERSION = "el7",
+    [String]$R_VERSION = "3.5.1",
+    [String]$ARROW_VERSION = "0.12.0"
+)
+
 $TIME= [int][double]::Parse((Get-Date -UFormat "%s"))
 $CONTAINER="parcel-build-${TIME}"
 
