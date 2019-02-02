@@ -1,0 +1,36 @@
+language: general
+
+services:
+  - docker
+
+env:
+  global:
+    - VERSION="3.5.1.p0.0.1"
+    - R_VERSION="3.5.1"
+    - ARROW_VERSION="0.12.0"
+  matrix:
+    - DISTRIBUTION=centos TARGET_OS=centos7 OS_VERSION=el7
+    - DISTRIBUTION=centos TARGET_OS=centos6 OS_VERSION=el6
+    - DISTRIBUTION=ubuntu TARGET_OS=xenial OS_VERSION=xenial
+
+before_script:
+  - mkdir -p ./target
+
+script:
+  - ./extract_from_docker.sh $VERSION $DISTRIBUTION $TARGET_OS $OS_VERSION $R_VERSION $ARROW_VERSION
+
+before_deploy:
+  - echo "Create manifest.json"
+  - python ./lib/make_manifest.py ./target
+  - echo "Update index.html"
+  - python ./lib/create_index.py ./target
+
+deploy:
+  provider: releases
+  file_glob: true
+  file: target/*
+  skip_cleanup: true
+  on:
+    tags: true
+  api_key:
+    secure: "xKMPP6e0HyeEULxKnXfX8QvbCSwYW0ZGdXCCkqRMzn/Z3sqQKZk3jjtn/+YXigtwIZ8G9+w1L3tvlHiLQhLWuuFsShXuqS3WU/P7LuC5t0jVdJRSBMfy1IEVdrgXypBfnDHT9S+KHDv492daP661fo2FVnop1XxHc3WJX+0ip/VtDnqMrgK9ksBb5DHHvgk22D4O7UUF9YDlkS5P/Nm0PZx9n1Kv5OZytA0cHYGTVDAO0Tz29FM+Ou08HKo9+VaKC3n6IhNTy+GXuG9s47zcHZzdOpywgIA3AGNLKesymmh6+61FTIeuhhf8MX9EzI64bwlBX6SWVbKhbsNridqSayrbeS6A+iHd8lXr9g3MR5dlvq1txBatJBpMqhx9/9JVeB4eal/lzUbufFGTNER6WYS56VpQkgn17uDNdCUcJGMBewSyQ5K0dhmkuow/Lkq2nM7HXByo7n2UCv9eiQetQ7gbJTn8QmUWxhCYwwVSIOt6N11Uxey14aiBshzOIq28tHhq1UDmm1VHSKbNfaO6plFRDU+ePEnMZB9zq3S0ICzvbD4Oz9oXj1UGtL+mYDG35GAhZwsTW9jw+R4Dl2u5c/3XRjYCcuw7TG6fgL5NauFC2gmV1zd+eRUlI//LGoKb9CAEUHaSHurhD0H2s+SkuAuefzZjbJynKhVuPk9d9Rc="

@@ -1,21 +1,17 @@
-$VERSION="3.4.1.p0.1.2"
+$VERSION="3.5.1.p0.0.1"
 
-echo "Create target directory"
+Write-Output "Create target directory"
 New-Item -force -type Directory target
 
 # RHEL/CentOS
-./extract_from_docker.ps1 $VERSION centos centos7 el7
-./extract_from_docker.ps1 $VERSION centos centos6 el6
+./extract_from_docker.ps1 -VERSION $VERSION -DISTRIBUTION centos -TARGET_OS centos7 -OS_VERSION el7
+./extract_from_docker.ps1 -VERSION $VERSION -DISTRIBUTION centos -TARGET_OS centos6 -OS_VERSION el6
 # Ubuntu
-./extract_from_docker.ps1 $VERSION ubuntu trusty trusty
-./extract_from_docker.ps1 $VERSION ubuntu xenial xenial
-# Debian
-./extract_from_docker.ps1 $VERSION debian jessie jessie
-./extract_from_docker.ps1 $VERSION debian wheezy wheezy
+./extract_from_docker.ps1 -VERSION $VERSION -DISTRIBUTION ubuntu -TARGET_OS xenial -OS_VERSION xenial
 
 # Create manifest.json
-echo "Create manifest.json"
+Write-Output "Create manifest.json"
 python ./lib/make_manifest.py ./target
 
-echo "Update index.html"
+Write-Output "Update index.html"
 python ./lib/create_index.py ./target

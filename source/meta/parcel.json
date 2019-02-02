@@ -18,13 +18,13 @@
 
   "packages": [
     { "name"   : "conda-R",
-      "version": "3.4.1+cdh5.0.0~el7-cdh5.0.0"
+      "version": "3.4.1+cdh6.0.0~el7-cdh6.0.0"
     }
   ],
 
   "components": [
     { "name"   : "conda-R",
-      "version": "3.4.1+cdh5.0.0~el7-cdh5.0.0"
+      "version": "3.4.1+cdh6.0.0~el7-cdh6.0.0"
     }
   ],
 
