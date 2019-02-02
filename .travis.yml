@@ -13,6 +13,9 @@ env:
     - DISTRIBUTION=centos TARGET_OS=centos6 OS_VERSION=el6
     - DISTRIBUTION=ubuntu TARGET_OS=xenial OS_VERSION=xenial
 
+before_script:
+  - mkdir -p ./target
+
 script:
   - ./extract_from_docker.sh $VERSION $DISTRIBUTION $TARGET_OS $OS_VERSION $R_VERSION $ARROW_VERSION
 
