@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "CONDAR",
-  "version": "3.5.1",
+  "version": "3.4.1",
   "setActiveSymlink": true,
 
   "depends": "",
@@ -18,13 +18,13 @@
 
   "packages": [
     { "name"   : "conda-R",
-      "version": "3.5.1+cdh6.0.0~el7-cdh6.0.0"
+      "version": "3.4.1+cdh6.0.0~el7-cdh6.0.0"
     }
   ],
 
   "components": [
     { "name"   : "conda-R",
-      "version": "3.5.1+cdh6.0.0~el7-cdh6.0.0"
+      "version": "3.4.1+cdh6.0.0~el7-cdh6.0.0"
     }
   ],
 
