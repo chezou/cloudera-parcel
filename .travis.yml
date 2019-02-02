@@ -6,7 +6,7 @@ services:
 env:
   global:
     - VERSION="3.5.1.p0.0.1"
-    - R_VERSION="3.5.1
+    - R_VERSION="3.5.1"
     - ARROW_VERSION="0.12.0"
   matrix:
     - DISTRIBUTION=centos TARGET_OS=centos7 OS_VERSION=el7
