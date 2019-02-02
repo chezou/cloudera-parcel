@@ -30,6 +30,7 @@ deploy:
   file_glob: true
   file: target/*
   skip_cleanup: true
+  overwrite: true
   on:
     tags: true
   api_key:
