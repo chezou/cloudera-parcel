@@ -3,8 +3,24 @@ language: general
 services:
   - docker
 
+env:
+  global:
+    - VERSION="3.5.1.p0.0.1"
+    - R_VERSION="3.5.1
+    - ARROW_VERSION="0.12.0"
+  matrix:
+    - DISTRIBUTION=centos TARGET_OS=centos7 OS_VERSION=el7
+    - DISTRIBUTION=centos TARGET_OS=centos6 OS_VERSION=el6
+    - DISTRIBUTION=ubuntu TARGET_OS=xenial OS_VERSION=xenial
+
 script:
-  - . build.sh
+  - ./extract_from_docker.sh $VERSION $DISTRIBUTION $TARGET_OS $OS_VERSION $R_VERSION $ARROW_VERSION
+
+before_deploy:
+  - echo "Create manifest.json"
+  - python ./lib/make_manifest.py ./target
+  - echo "Update index.html"
+  - python ./lib/create_index.py ./target
 
 deploy:
   provider: releases
