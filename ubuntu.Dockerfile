@@ -5,6 +5,7 @@ ARG R_VERSION=3.5.1
 ARG ARROW_VERSION=0.12.0
 ARG PARCEL_VERSION=3.4.1.p0.1
 ARG OS_VERSION=trusty
+ARG CONDA_URI=https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 ARG PARCEL_DIR=/opt/cloudera/parcels
 ARG PARCEL_NAME=CONDAR
 
