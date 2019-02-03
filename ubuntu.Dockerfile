@@ -36,7 +36,7 @@ RUN conda create -y -q --copy -c conda-forge -n R_env \
 # To provide tar place for utils::untar https://github.com/r-lib/devtools/issues/379#issuecomment-309836261
 ENV TAR "/bin/tar"
 RUN . $PARCEL_DIR/$PARCEL_NAME-$PARCEL_VERSION/etc/profile.d/conda.sh && \
-    conda activate R_env && \
+    conda activate r && \
     # Install R dependencies
     Rscript -e "install.packages('devtools', repos = 'http://cran.rstudio.com')" && \
     Rscript -e "devtools::install_github('apache/arrow', subdir = 'r', ref = 'apache-arrow-${ARROW_VERSION}')" && \
