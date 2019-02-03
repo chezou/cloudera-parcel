@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "name": "CONDAR",
-  "version": "3.4.1",
+  "name": "__PARCEL_NAME__",
+  "version": "__PARCEL_VERSION__",
   "setActiveSymlink": true,
 
   "depends": "",
@@ -9,7 +9,7 @@
   "conflicts": "",
 
   "provides": [
-    "conda-R"
+    "r"
   ],
 
   "scripts": {
@@ -17,14 +17,14 @@
   },
 
   "packages": [
-    { "name"   : "conda-R",
-      "version": "3.4.1+cdh6.0.0~el7-cdh6.0.0"
+    { "name"   : "__PARCEL_NAME__",
+      "version": "__PARCEL_VERSION__+cdh6.0.0~__OS_VERSION__-cdh6.0.0"
     }
   ],
 
   "components": [
-    { "name"   : "conda-R",
-      "version": "3.4.1+cdh6.0.0~el7-cdh6.0.0"
+    { "name"   : "__PARCEL_NAME__",
+      "version": "__PARCEL_VERSION__+cdh6.0.0~__OS_VERSION__-cdh6.0.0"
     }
   ],
 

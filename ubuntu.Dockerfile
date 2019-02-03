@@ -3,8 +3,11 @@ FROM ubuntu:${TARGET_OS}
 
 ARG R_VERSION=3.5.1
 ARG ARROW_VERSION=0.12.0
-ARG VERSION=3.4.1.p0.1
+ARG PARCEL_VERSION=3.4.1.p0.1
 ARG OS_VERSION=trusty
+ARG CONDA_URI=https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+ARG PARCEL_DIR=/opt/cloudera/parcels
+ARG PARCEL_NAME=CONDAR
 
 # To avoid syntax error on `conda activate`, use bash
 SHELL ["/bin/bash", "-c"]
@@ -16,13 +19,15 @@ RUN apt-get -qq update && \
     apt-get install -qq -y \
     bzip2 \
     curl && \
-    curl -O https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
-    bash Miniconda2-latest-Linux-x86_64.sh -b -p /opt/conda && \
-    rm -f Miniconda2-latest-Linux-x86_64.sh && \
+    mkdir -p $PARCEL_DIR && \
+    CONDA_EXECUTABLE=$(basename ${CONDA_URI}) && \
+    curl -O ${CONDA_URI} && \
+    bash ${CONDA_EXECUTABLE} -b -p $PARCEL_DIR/$PARCEL_NAME-$PARCEL_VERSION && \
+    rm -f ${CONDA_EXECUTABLE} && \
     apt-get clean
 
-ENV PATH /opt/conda/bin:$PATH
-RUN conda create -y -q --copy -c conda-forge -n R_env \
+ENV PATH $PARCEL_DIR/$PARCEL_NAME-$PARCEL_VERSION/bin:$PATH
+RUN conda create -y -q --copy -c conda-forge -n r \
         r-essentials==${R_VERSION} \
         arrow-cpp==${ARROW_VERSION} \
         r-r.utils==2.7.0 \
@@ -30,27 +35,29 @@ RUN conda create -y -q --copy -c conda-forge -n R_env \
 
 # To provide tar place for utils::untar https://github.com/r-lib/devtools/issues/379#issuecomment-309836261
 ENV TAR "/bin/tar"
-RUN . /opt/conda/etc/profile.d/conda.sh && \
-    conda activate R_env && \
+RUN . $PARCEL_DIR/$PARCEL_NAME-$PARCEL_VERSION/etc/profile.d/conda.sh && \
+    conda activate r && \
     # Install R dependencies
     Rscript -e "install.packages('devtools', repos = 'http://cran.rstudio.com')" && \
     Rscript -e "devtools::install_github('apache/arrow', subdir = 'r', ref = 'apache-arrow-${ARROW_VERSION}')" && \
     conda clean -i -t -l -s -y && \
-    conda deactivate && \
-    sed -i s,/opt/conda/envs/R_env,/opt/cloudera/parcels/CONDAR/lib/conda-R, /opt/conda/envs/R_env/bin/R
+    conda deactivate
 
-RUN mkdir -p /data/CONDAR-$VERSION/lib && \
-    mkdir -p /data/CONDAR-$VERSION/meta
-WORKDIR /data
+WORKDIR ${PARCEL_DIR}
 
-RUN mv /opt/conda/envs/R_env /data/CONDAR-$VERSION/lib/conda-R
-
-COPY source/meta/* CONDAR-$VERSION/meta/
+RUN mkdir -p ${PARCEL_NAME}-${PARCEL_VERSION}/{lib,meta}
+COPY source/meta/* ${PARCEL_NAME}-${PARCEL_VERSION}/meta/
 RUN sed -i \
-    -e "s/el7/${OS_VERSION}/g" \
-    -e "s/3.4.1/${VERSION}/g" \
-    CONDAR-${VERSION}/meta/parcel.json && \
-    tar czf CONDAR-${VERSION}-${OS_VERSION}.parcel CONDAR-${VERSION} --owner=root --group=root && \
-    rm -rf CONDAR-${VERSION}
+    -e "s/__OS_VERSION__/${OS_VERSION}/g" \
+    -e "s/__PARCEL_VERSION__/${PARCEL_VERSION}/g" \
+    -e "s/__PARCEL_NAME__/${PARCEL_NAME}/g" \
+    ${PARCEL_NAME}-${PARCEL_VERSION}/meta/parcel.json && \
+    sed -i \
+    -e "s/__OS_VERSION__/${OS_VERSION}/g" \
+    -e "s/__PARCEL_VERSION__/${PARCEL_VERSION}/g" \
+    -e "s/__PARCEL_NAME__/${PARCEL_NAME}/g" \
+    ${PARCEL_NAME}-${PARCEL_VERSION}/meta/R_env.sh && \
+    tar czf ${PARCEL_NAME}-${PARCEL_VERSION}-${OS_VERSION}.parcel ${PARCEL_NAME}-${PARCEL_VERSION} --owner=root --group=root && \
+    rm -rf ${PARCEL_NAME}-${PARCEL_VERSION}
 
 CMD ["/bin/bash"]
