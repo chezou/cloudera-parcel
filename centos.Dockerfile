@@ -47,6 +47,6 @@ RUN sed -i \
     -e "s/__PARCEL_NAME__/${PARCEL_NAME}/g" \
     ${PARCEL_NAME}-${PARCEL_VERSION}/meta/R_env.sh && \
     tar czf ${PARCEL_NAME}-${PARCEL_VERSION}-${OS_VERSION}.parcel ${PARCEL_NAME}-${PARCEL_VERSION} --owner=root --group=root && \
-    rm -rf ${PARCEL_NAME}-${PARCEL_AVERSION}
+    rm -rf ${PARCEL_NAME}-${PARCEL_VERSION}
 
 CMD ["/bin/bash"]

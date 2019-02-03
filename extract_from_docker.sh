@@ -24,6 +24,7 @@ docker build --no-cache  --build-arg PARCEL_NAME=${PARCEL_NAME} --build-arg PARC
             --build-arg R_VERSION=${R_VERSION} --build-arg ARROW_VERSION=${ARROW_VERSION} \
             --build-arg TARGET_OS=${TARGET_OS} --build-arg OS_VERSION=${OS_VERSION} \
             -t ${IMAGE_NAME}:${TARGET_OS} -f ${DISTRIBUTION}.Dockerfile .
+echo "Finish docker image. Extract parcel"
 docker run -d --name ${CONTAINER} -t ${IMAGE_NAME}:${TARGET_OS} /bin/bash
 docker cp -L ${CONTAINER}:${PARCEL_DIR}/${PARCEL_NAME}-${PARCEL_VERSION}-${OS_VERSION}.parcel ./target/
 docker kill $CONTAINER

@@ -27,7 +27,7 @@ RUN apt-get -qq update && \
     apt-get clean
 
 ENV PATH $PARCEL_DIR/$PARCEL_NAME-$PARCEL_VERSION/bin:$PATH
-RUN conda create -y -q --copy -c conda-forge -n R_env \
+RUN conda create -y -q --copy -c conda-forge -n r \
         r-essentials==${R_VERSION} \
         arrow-cpp==${ARROW_VERSION} \
         r-r.utils==2.7.0 \
@@ -41,13 +41,12 @@ RUN . $PARCEL_DIR/$PARCEL_NAME-$PARCEL_VERSION/etc/profile.d/conda.sh && \
     Rscript -e "install.packages('devtools', repos = 'http://cran.rstudio.com')" && \
     Rscript -e "devtools::install_github('apache/arrow', subdir = 'r', ref = 'apache-arrow-${ARROW_VERSION}')" && \
     conda clean -i -t -l -s -y && \
-    conda deactivate && \
-    /opt/conda/envs/R_env/bin/R
+    conda deactivate
 
 WORKDIR ${PARCEL_DIR}
 
 RUN mkdir -p ${PARCEL_NAME}-${PARCEL_VERSION}/{lib,meta}
-COPY source/meta/* CONDAR-$VERSION/meta/
+COPY source/meta/* ${PARCEL_NAME}-${PARCEL_VERSION}/meta/
 RUN sed -i \
     -e "s/__OS_VERSION__/${OS_VERSION}/g" \
     -e "s/__PARCEL_VERSION__/${PARCEL_VERSION}/g" \
@@ -59,6 +58,6 @@ RUN sed -i \
     -e "s/__PARCEL_NAME__/${PARCEL_NAME}/g" \
     ${PARCEL_NAME}-${PARCEL_VERSION}/meta/R_env.sh && \
     tar czf ${PARCEL_NAME}-${PARCEL_VERSION}-${OS_VERSION}.parcel ${PARCEL_NAME}-${PARCEL_VERSION} --owner=root --group=root && \
-    rm -rf ${PARCEL_NAME}-${PARCEL_AVERSION}
+    rm -rf ${PARCEL_NAME}-${PARCEL_VERSION}
 
 CMD ["/bin/bash"]
