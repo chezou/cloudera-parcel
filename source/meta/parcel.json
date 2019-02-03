@@ -24,7 +24,7 @@
 
   "components": [
     { "name"   : "__PARCEL_NAME__",
-      "version": "__PARCEL_VERSION__3.4.1+cdh6.0.0~__OS_VERSION__-cdh6.0.0"
+      "version": "__PARCEL_VERSION__+cdh6.0.0~__OS_VERSION__-cdh6.0.0"
     }
   ],
 

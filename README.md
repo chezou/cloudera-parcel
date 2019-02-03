@@ -27,7 +27,7 @@ $ mkdir -p ./target/CONDAR-3.4.1/lib
 $ cp -r ./source/meta ./target/CONDAR-3.4.1/
 # (Option) Modify meta/parcel.json if needed
 # $ sed -i s/__OS_VERSION__/el6/g ./target/CONDAR-3.4.1/meta/parcel.json
-$ docker build -t chezou/condar:centos7 -f centos7.Dockerfile .  
+$ docker build -t chezou/condar:centos7 -f centos7.Dockerfile .
 # Open another terminal and find your container.
 $ docker run -it -t chezou/condar:centos7 /bin/bash
 $ docker ps
